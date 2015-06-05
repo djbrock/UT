@@ -1,16 +1,5 @@
- # Standard things
+include build/push_stack.mk
 
-sp              := $(sp).x
-dirstack_$(sp)  := $(d)
-d               := $(dir)
+$(foreach thedir_$(d),$(shell find $(d) -depth 2 -name Rules.mk -exec dirname {} \; | xargs basename -a),$(eval dir:=$(d)/$(thedir_$(d))) $(eval include $(d)/$(thedir_$(d))/Rules.mk))
 
-
-# Subdirectories, in any order
-
-dir     := $(d)/maths
-include         $(dir)/Rules.mk
-
-# Standard things
-
-d               := $(dirstack_$(sp))
-sp              := $(basename $(sp))
+include build/pop_stack.mk

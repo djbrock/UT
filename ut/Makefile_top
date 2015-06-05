@@ -14,10 +14,12 @@ endif
 
 LF_ALL          =
 ifeq ($(PLATFORM),MACOSX)
+UT_CF_TGT       := -fPIC -I/opt/local/include
 LL_ALL          = -L/opt/local/lib -lcunit
 else
 LL_ALL          =
 endif
+
 
 ### Build tools
 #

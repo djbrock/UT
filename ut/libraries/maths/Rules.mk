@@ -1,6 +1,6 @@
 # Standard things
 
--include ./build/push_stack.mk
+include ./build/push_stack.mk
 
 
 # Subdirectories, in random order
@@ -32,7 +32,7 @@ OBJ_BUNDLE := $(OBJ_BUNDLE) $(TEST_OBJS_$(d))
 
 # Local rules
 # used to have -shared but clang complained
-$(OBJS_$(d)):   CF_TGT := -I../src/$(d) -fPIC
+$(OBJS_$(d)):   CF_TGT := $(UT_CF_TGT) -I../src/$(d) 
 
 $(BUILDROOT)/$(d)/%.a:          $(d)/%.b
 	$(COMP)
@@ -54,5 +54,5 @@ $(BUILDROOT)/$(d)/%.o:          $(d)/%.c
 
 -include        $(DEPS_$(d))
 
--include ./build/pop_stack.mk
+include ./build/pop_stack.mk
 

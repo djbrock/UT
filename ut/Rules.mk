@@ -13,13 +13,7 @@ $(1): $(2)
 
 endef
 
-# Subdirectories, in any order
-
-dir := libraries
-include     $(dir)/Rules.mk
-
-dir	:= ut_main
-include		$(dir)/Rules.mk
+$(foreach thedir,$(shell find . -depth 2 -name Rules.mk -exec dirname {} \; | xargs basename -a),$(eval dir:=$(thedir)) $(eval include $(thedir)/Rules.mk))
 
 # General directory independent rules
 
@@ -41,22 +35,6 @@ targets:	$(TGT_LDLIB) $(TGT_BIN) $(TGT_SBIN) $(TGT_ETC) $(TGT_LIB)
 .PHONY:		clean
 clean:
 		rm -f $(CLEAN)
-
-.PHONY:		install
-install:	targets 
-		$(INST) $(TGT_BIN) -m 755 -d $(DIR_BIN)
-		$(CMD_INSTBIN)
-		$(INST) $(TGT_SBIN) -m 750 -d $(DIR_SBIN)
-		$(CMD_INSTSBIN)
-ifeq ($(wildcard $(DIR_ETC)/*),)
-		$(INST) $(TGT_ETC) -m 644 -d $(DIR_ETC)
-		$(CMD_INSTETC)
-else
-		@echo Configuration directory $(DIR_ETC) already present -- skipping
-endif
-		$(INST) $(TGT_LIB) -m 750 -d $(DIR_LIB)
-		$(CMD_INSTLIB)
-
 
 # Prevent make from removing any build targets, including intermediate ones
 
