@@ -15,6 +15,7 @@ $(BUILDROOT)/$(d)/$(BIN_NAME_$(d)):	LL_TGT := $(BINLIBS_$(d))
 $(BUILDROOT)/$(d)/$(BIN_NAME_$(d)):	$(OBJS_$(d)) $(ALGS_LNK_$(d)) $(LIBS_$(d))
 	$(LINK)
 	@basename $@ | xargs echo "[Installing] "
+	@mkdir ../bin
 	@basename $@ | xargs -I % cp $@ ../bin/%
 	@basename $@ | xargs -I % cp $@ ../bin/%_$(VER)
 

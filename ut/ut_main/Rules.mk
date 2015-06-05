@@ -12,6 +12,7 @@ d               := $(dir)
 C_FILES_$(d) := ut_main/ut_main.c
 OBJS_D_$(d) := $(C_FILES_$(d):.c=.o)
 OBJS_$(d) := $(foreach obj, $(OBJS_D_$(d)), $(BUILDROOT)/$(obj))
+# The target here is deliberatly above this directory so that the algorithm directories will be searched for tests
 TGT_BIN  := $(BUILDROOT)/ut_main_bin
 DEPS_$(d)       := $(OBJS_$(d):%=%.d)
 
