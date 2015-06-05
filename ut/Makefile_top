@@ -1,0 +1,34 @@
+### Build flags for all targets
+#
+DEFINES=                \
+-D_LARGEFILE64_SOURCE \
+-D_FILE_OFFSET_BITS=64 
+
+#/usr/local/include for CUnit
+
+ifeq ($(PLATFORM),MACOSX)
+CF_ALL          = --std=gnu99 -g2 -O0 -W -Wall $(DEFINES) -I/opt/local/include
+else
+CF_ALL          = --std=gnu99 -g2 -O0 -W -Wall $(DEFINES)
+endif
+
+LF_ALL          =
+ifeq ($(PLATFORM),MACOSX)
+LL_ALL          = -L/opt/local/lib -lcunit
+else
+LL_ALL          =
+endif
+
+### Build tools
+#
+BUILDROOT       = ../build_root/$(PLATFORM)
+CC              = sh ./build/ccd-gcc
+COMP            = @$(CC) $(CF_ALL) $(CF_TGT) -o $@ -c $<
+LINK            = $(CC) $(LF_ALL) $(LF_TGT) -o $@ $^ $(LL_TGT) $(LL_ALL)
+LDLIB           = @$(CC) $(LF_ALL) $(LF_TGT) -fPIC -shared -rdynamic -o $@ $^ $(LL_TGT) $(LL_ALL)
+COMPLINK        = @$(CC) $(CF_ALL) $(CF_TGT) $(LF_ALL) $(LF_TGT) -o $@ $^ $(LL_TGT) $(LL_ALL)
+MKLIB           = @ar -rc $@ $^ ; echo "[BUILD LIBRARY] $@"
+
+### Standard parts
+#
+include Rules.mk
