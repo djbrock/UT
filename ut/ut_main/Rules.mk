@@ -1,9 +1,6 @@
 # Standard things
 
-sp              := $(sp).x
-dirstack_$(sp)  := $(d)
-d               := $(dir)
-
+include build/push_stack.mk
 
 # Subdirectories, in random order
 
@@ -16,7 +13,7 @@ OBJS_$(d) := $(foreach obj, $(OBJS_D_$(d)), $(BUILDROOT)/$(obj))
 TGT_BIN  := $(BUILDROOT)/ut_main_bin
 DEPS_$(d)       := $(OBJS_$(d):%=%.d)
 
-CLEAN           := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) $(TGT_BIN) $(TGT_LDLIB)
+CLEAN := $(CLEAN) $(OBJS_$(d)) $(DEPS_$(d)) $(TGT_BIN) $(TGT_LDLIB)
 
 # Local rules
 
@@ -30,13 +27,12 @@ $(TGT_BIN):     $(OBJS_$(d))
 
 $(BUILDROOT)/$(d)/%.o:          $(d)/%.c
 	$(COMP)
+	
 # Standard things
 
 -include        $(DEPS_$(d))
 
-d               := $(dirstack_$(sp))
-sp              := $(basename $(sp))
-
+include build/pop_stack.mk
 
 
 

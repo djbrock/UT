@@ -34,5 +34,9 @@ make -f Makefile_top |& tee makelog.txt
 #echo "Preload setting " $LD_PRELOAD
 #echo "Library path setting " $LD_LIBRARY_PATH
 echo "Build finished"
-
-
+echo
+echo -n "Count of warnings : "
+echo `grep -c "warning:" makelog.txt`
+echo -n "Count of errors : "
+echo `grep -c "error:" makelog.txt`
+echo

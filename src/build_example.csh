@@ -25,7 +25,7 @@ if ( $PLATFORM == DONTKNOW ) then
 endif
 
 #perl -w build/annotate_revision.pl || exit
-
+setenv VER 01_01
 echo "Starting build"
 
 # If we need to force a specific compiler version i.e. gcc-4.1, set CC here
@@ -35,4 +35,9 @@ make -f Makefile_top |& tee makelog.txt
 #echo "Library path setting " $LD_LIBRARY_PATH
 echo "Build finished"
 
-
+echo
+echo -n "Count of warnings : "
+echo `grep -c "warning:" makelog.txt`
+echo -n "Count of errors : "
+echo `grep -c "error:" makelog.txt`
+echo

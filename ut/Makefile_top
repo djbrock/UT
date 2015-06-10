@@ -20,16 +20,15 @@ else
 LL_ALL          =
 endif
 
-
 ### Build tools
 #
 BUILDROOT       = ../build_root/$(PLATFORM)
 CC              = sh ./build/ccd-gcc
-COMP            = @$(CC) $(CF_ALL) $(CF_TGT) -o $@ -c $<
+COMP            = $(CC) $(CF_ALL) $(CF_TGT) -o $@ -c $<
 LINK            = $(CC) $(LF_ALL) $(LF_TGT) -o $@ $^ $(LL_TGT) $(LL_ALL)
-LDLIB           = @$(CC) $(LF_ALL) $(LF_TGT) -fPIC -shared -rdynamic -o $@ $^ $(LL_TGT) $(LL_ALL)
-COMPLINK        = @$(CC) $(CF_ALL) $(CF_TGT) $(LF_ALL) $(LF_TGT) -o $@ $^ $(LL_TGT) $(LL_ALL)
-MKLIB           = @ar -rc $@ $^ ; echo "[BUILD LIBRARY] $@"
+LDLIB           = $(CC) $(LF_ALL) $(LF_TGT) -fPIC -shared -rdynamic -o $@ $^ $(LL_TGT) $(LL_ALL)
+COMPLINK        = $(CC) $(CF_ALL) $(CF_TGT) $(LF_ALL) $(LF_TGT) -o $@ $^ $(LL_TGT) $(LL_ALL)
+MKLIB           = ar -rc $@ $^ ; echo "[BUILD LIBRARY] $@"
 
 ### Standard parts
 #
